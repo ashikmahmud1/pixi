@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="assets/css/leaderboardStyle.css" type="text/css">
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+
+</head>
+<body>
+    <div class="content">
+        <h1>Leaderboard</h1>
+
+        <table>
+            <thead>
+                <th>#</th>
+                <th>User Name</th>
+                <th>Score</th>
+            </thead>
+            <tbody id="resultTable">
+            </tbody>
+        </table>
+        <a href="index.html">Return To Game</a>
+    </div>
+
+    <script>
+        $(function () {
+            let table = "";
+            let data = JSON.parse(localStorage.getItem("resultTable"));
+            $("#result").text(
+                data
+            );
+            let res = [];
+            for(let i in data) {
+                res.push([data[i].userName, data[i].scores])
+            }
+            res.sort(function (a, b) {
+                return a[1] - b[1];
+            }).reverse();
+
+            for(let i=0; i < res.length; i ++) {
+                table += "<tr><td>";
+                table += i+1 + "</td>" + "<td>" + res[i][0] +"</td>" + "<td>" + res[i][1] +"</td>";
+                table += "</tr>";
+            }
+            $("#resultTable").html(table);
+        });
+    </script>
+</body>
+</html>
